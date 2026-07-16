@@ -70,14 +70,14 @@ export const events = [
     "body": "Projemizin altyapısında kullandığımız ileri akıllı ev teknolojileri (IoT), sektörün büyük oyuncularının da dikkatini çekti. Geçtiğimiz hafta Luxera Towers Kongre Merkezi'nde düzenlenen \"Geleceğin Yaşam Alanları ve IoT\" zirvesinde, projemiz bir vaka çalışması (case study) olarak incelendi. Sürdürülebilirlik, enerji verimliliği ve otonom güvenlik sistemlerimiz katılımcılardan tam not aldı."
   },
   {
-    "id": "yaz-senligi-2026",
+    "id": "kis-senligi-2026",
     "category": "Eğlence ve Organizasyon",
     "date": "27 Ocak 2026",
     "isoDate": "2026-01-27",
-    "title": "Açık Hava Yaz Şenliği",
-    "desc": "Sıcak yaz akşamlarında havuz başında aile boyu eğlence.",
+    "title": "Kış Ortası Şenliği",
+    "desc": "Soğuk kış akşamlarında şömine başında aile boyu eğlence.",
     "image": "/images/exterior/12_2025-12-18_02-46-35_4cee27.webp",
-    "body": "Yazın en güzel günlerinde komşularınızla bir araya gelin."
+    "body": "Kışın en güzel günlerinde komşularınızla sıcak çikolata ve kestane eşliğinde bir araya gelin."
   },
   {
     "id": "okula-donus-2026",
@@ -130,14 +130,14 @@ export const events = [
     "body": "Sokak lezzetlerinden fine-dining tadımlarına uzanan geniş bir yelpaze."
   },
   {
-    "id": "cadilar-bayrami-2026",
+    "id": "bahar-senligi-2026",
     "category": "Eğlence ve Organizasyon",
     "date": "15 Nisan 2026",
     "isoDate": "2026-04-15",
-    "title": "Çocuklar İçin Cadılar Bayramı Partisi",
-    "desc": "Kids Club'da kostümlü ve bol şekerli eğlence.",
+    "title": "Çocuklar İçin Bahar Şenliği Partisi",
+    "desc": "Kids Club'da bahar temalı kostümlü ve bol oyunlu eğlence.",
     "image": "/images/interior/4_2025-12-18_02-42-20_d1aa12.webp",
-    "body": "Çocuklarınız en sevdikleri kahramanların kostümleriyle partiye katılabilir."
+    "body": "Çocuklarınız en sevdikleri bahar kostümleriyle partiye katılabilir."
   },
   {
     "id": "yatirim-semineri-2026",
@@ -160,14 +160,14 @@ export const events = [
     "body": "Artan talepler doğrultusunda otoparkımızın elektrikli araç kapasitesi artırıldı."
   },
   {
-    "id": "kis-kampanyasi",
+    "id": "bahar-kampanyasi",
     "category": "Kampanya",
     "date": "24 Mayıs 2026",
     "isoDate": "2026-05-24",
-    "title": "Kış Sezonu Spa Avantajları",
-    "desc": "Tüm SPA paketlerinde %25 kış indirimi.",
+    "title": "Bahar Sezonu Spa Avantajları",
+    "desc": "Tüm SPA paketlerinde %25 bahar indirimi.",
     "image": "/images/interior/3_2025-12-18_02-46-35_5e79ff.webp",
-    "body": "Soğuk kış günlerinde sıcacık bir arınma deneyimi."
+    "body": "Ilık bahar günlerinde yenilenme deneyimi ve yaza taze bir başlangıç."
   },
   {
     "id": "satranc-turnuvasi",
@@ -180,23 +180,23 @@ export const events = [
     "body": "Turnuva birincisine sürpriz ödüllerimiz olacaktır."
   },
   {
-    "id": "yilbasi-hazirlik",
+    "id": "yaza-merhaba-hazirlik",
     "category": "Duyuru",
     "date": "19 Haziran 2026",
     "isoDate": "2026-06-19",
-    "title": "Ortak Alan Yılbaşı Süslemeleri",
-    "desc": "Tüm sosyal alanlarımız yeni yıl ruhuna bürünüyor.",
+    "title": "Ortak Alan Yaza Merhaba Süslemeleri",
+    "desc": "Tüm sosyal alanlarımız yaza özel cıvıl cıvıl renklerle süsleniyor.",
     "image": "/images/exterior/13_2025-12-18_02-46-35_3f1737.webp",
-    "body": "Site yönetimi tarafından gerçekleştirilen süslemeler başladı."
+    "body": "Site yönetimi tarafından gerçekleştirilen peyzaj ve dekorasyon yenilemeleri başladı."
   },
   {
-    "id": "gala-2026",
+    "id": "yaz-balosu-2026",
     "category": "Eğlence ve Organizasyon",
     "date": "02 Temmuz 2026",
     "isoDate": "2026-07-02",
-    "title": "Geleneksel Yılbaşı Balosu 2026",
-    "desc": "Yeni yıla elit bir atmosferde merhaba deyin.",
+    "title": "Geleneksel Yaz Balosu 2026",
+    "desc": "Havuz başında ve terasta elit bir atmosferde yaza merhaba deyin.",
     "image": "/images/interior/d5_scene21_20240303_011838copy_2025-12-18_03-46-29_26003e.webp",
-    "body": "Şampanya ikramı ve canlı orkestra eşliğinde unutulmaz gece."
+    "body": "Buzlu kokteyl ikramı ve canlı orkestra eşliğinde unutulmaz sıcak bir gece."
   }
 ];
