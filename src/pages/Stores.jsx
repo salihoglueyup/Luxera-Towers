@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, MapPin, Search } from 'lucide-react';
+import { ShoppingBag, MapPin, X, ExternalLink, Clock, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { fadeUp } from '../shared/utils/animations';
 import { stores } from '../data/brands';
 import PageHero from '../shared/ui/PageHero';
 import SectionHeader from '../shared/ui/SectionHeader';
@@ -11,16 +10,26 @@ import SEO from '../shared/seo/SEO';
 const Stores = () => {
   const { t } = useTranslation();
   
-  // Eşsiz kategorileri al
-  const categories = ['Tümü', ...new Set(stores.map(s => s.category))];
-  const [activeCategory, setActiveCategory] = useState('Tümü');
+  // Kat filtreleri
+  const floors = ['Tümü', ...new Set(stores.map(s => s.floor))];
+  const [activeFloor, setActiveFloor] = useState('Tümü');
+  
+  // Slide Over Panel iin secili magaza
+  const [selectedStore, setSelectedStore] = useState(null);
 
-  const filteredStores = activeCategory === 'Tümü' 
+  const filteredStores = activeFloor === 'Tümü' 
     ? stores 
-    : stores.filter(s => s.category === activeCategory);
+    : stores.filter(s => s.floor === activeFloor);
+
+  // Paneli kapatma ksayolu (Escape)
+  useEffect(() => {
+    const handleEsc = (e) => { if (e.key === 'Escape') setSelectedStore(null); };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
 
   return (
-    <div className="bg-luxera-navy min-h-screen text-white pb-24">
+    <div className="bg-luxera-navy min-h-screen text-white pb-24 overflow-hidden relative">
       <SEO 
         title={t('stores.seo.title', 'Mağazalar ve Markalar')}
         description={t('stores.seo.desc', 'Luxera Towers AVM\'de yer alan lüks markalar, seçkin butikler ve teknoloji mağazaları.')}
@@ -34,83 +43,177 @@ const Stores = () => {
         backgroundImage="/images/exterior/1_2025-12-18_02-46-35_e84e9a.webp"
       />
 
-      <div className="max-w-[90rem] mx-auto px-6 mt-32">
+      <div className="max-w-[95rem] mx-auto px-4 mt-32">
         <SectionHeader 
           title={t('stores.section.title', 'Marka Karması')}
           subtitle={t('stores.section.subtitle', 'Ayrıcalıklı bir alışveriş deneyimi için özenle seçilmiş markalar.')}
           watermark="AVM"
         />
 
-        {/* Kategori Filtreleri */}
-        <div className="flex flex-wrap justify-center gap-3 mb-16">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-widest transition-all duration-300 ${
-                activeCategory === cat 
-                ? 'bg-luxera-gold text-luxera-navy shadow-[0_0_20px_rgba(212,175,55,0.4)]' 
-                : 'bg-white/5 border border-white/10 text-gray-400 hover:border-luxera-gold/50 hover:text-white'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        <div className="flex flex-col lg:flex-row gap-12 mt-16">
+          
+          {/* Sol: Kat Plan Filtreleme */}
+          <div className="w-full lg:w-1/4 xl:w-1/5 shrink-0">
+            <div className="sticky top-32 bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md">
+              <h3 className="text-xl font-serif text-white mb-6 border-b border-white/10 pb-4">
+                <MapPin size={20} className="inline-block mr-2 text-luxera-gold" /> Kat Planı
+              </h3>
+              <div className="flex flex-col gap-3">
+                {floors.map(floor => (
+                  <button
+                    key={floor}
+                    onClick={() => setActiveFloor(floor)}
+                    className={`relative w-full text-left px-6 py-4 rounded-xl text-sm font-semibold tracking-wide transition-all duration-300 overflow-hidden group ${
+                      activeFloor === floor 
+                      ? 'text-luxera-navy bg-luxera-gold shadow-[0_0_20px_rgba(212,175,55,0.4)]' 
+                      : 'text-gray-400 bg-black/40 border border-white/5 hover:border-luxera-gold/50 hover:text-white'
+                    }`}
+                  >
+                    <span className="relative z-10">{floor}</span>
+                    {activeFloor !== floor && (
+                      <div className="absolute inset-0 bg-luxera-gold/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 z-0"></div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
 
-        {/* Mağazalar Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filteredStores.map((store, index) => (
-              <motion.div
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                key={store.id}
-                className="group relative h-[350px] rounded-2xl overflow-hidden bg-black"
-              >
-                {/* Background Image */}
-                <div className="absolute inset-0">
-                  <img 
-                    src={store.image} 
-                    alt={store.name}
-                    className="w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
-                </div>
+          {/* SaY: MaYazalar Grid */}
+          <div className="w-full lg:w-3/4 xl:w-4/5">
+            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <AnimatePresence mode="popLayout">
+                {filteredStores.map((store, index) => (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    key={store.id}
+                    onClick={() => setSelectedStore(store)}
+                    className="group relative h-[380px] rounded-3xl overflow-hidden bg-black cursor-pointer border border-white/5 hover:border-luxera-gold/30 transition-colors"
+                  >
+                    {/* Background Image */}
+                    <div className="absolute inset-0">
+                      <img 
+                        src={store.image} 
+                        alt={store.name}
+                        className="w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-110 transition-all duration-1000 ease-out"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                    </div>
 
-                {/* Content */}
-                <div className="absolute inset-0 p-6 flex flex-col justify-between z-10">
-                  <div className="flex justify-between items-start">
-                    <span className="bg-luxera-gold/20 backdrop-blur-md border border-luxera-gold/30 text-luxera-gold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full">
-                      {store.category}
-                    </span>
-                    <div className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <ShoppingBag size={14} className="text-white" />
-                    </div>
-                  </div>
+                    {/* Content */}
+                    <div className="absolute inset-0 p-8 flex flex-col justify-between z-10">
+                      <div className="flex justify-between items-start">
+                        <span className="bg-luxera-gold text-luxera-navy font-bold text-[10px] uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
+                          {store.category}
+                        </span>
+                        <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-luxera-gold transition-colors duration-300">
+                          <ShoppingBag size={16} className="text-white group-hover:text-luxera-navy transition-colors" />
+                        </div>
+                      </div>
 
-                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    {/* Fake Logo Typography */}
-                    <div className="mb-4">
-                      <h3 className={`text-4xl text-white ${store.name === 'Rolex' || store.name === 'BEYMEN' ? 'font-serif' : 'font-sans font-bold'} tracking-wide`}>
-                        {store.logo}
-                      </h3>
+                      <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        {/* Fake Logo Typography */}
+                        <div className="mb-4">
+                          <h3 className={`text-4xl text-white ${store.name === 'Rolex' || store.name === 'Beymen' ? 'font-serif' : 'font-sans font-bold'} tracking-wide drop-shadow-lg`}>
+                            {store.logo}
+                          </h3>
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2 text-gray-300 text-sm bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
+                            <MapPin size={14} className="text-luxera-gold" />
+                            <span>{store.floor}</span>
+                          </div>
+                          
+                          <span className="text-luxera-gold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold tracking-wide">
+                            İncele &rarr;
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <div className="flex items-center gap-2 text-gray-400 text-sm">
-                      <MapPin size={14} className="text-luxera-gold" />
-                      <span>{store.floor}</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
         </div>
       </div>
+
+      {/* Slide-over Detail Panel */}
+      <AnimatePresence>
+        {selectedStore && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+              onClick={() => setSelectedStore(null)}
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 right-0 w-full md:w-[450px] bg-luxera-charcoal border-l border-white/10 shadow-2xl z-[110] flex flex-col"
+            >
+              <div className="h-64 relative shrink-0">
+                <img src={selectedStore.image} alt={selectedStore.name} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-luxera-charcoal to-transparent" />
+                <button 
+                  onClick={() => setSelectedStore(null)}
+                  className="absolute top-6 left-6 w-10 h-10 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-luxera-gold hover:text-luxera-navy transition-colors border border-white/10"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="p-8 flex-grow overflow-y-auto">
+                <span className="bg-luxera-gold/10 text-luxera-gold border border-luxera-gold/20 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full inline-block mb-6">
+                  {selectedStore.category}
+                </span>
+
+                <h2 className="text-4xl font-serif text-white mb-2">{selectedStore.name}</h2>
+                <div className="flex items-center gap-2 text-gray-400 mb-8">
+                  <MapPin size={16} /> <span>{selectedStore.floor}</span>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                    <div className="flex items-center gap-3 text-white mb-2 font-semibold">
+                      <Clock size={18} className="text-luxera-gold" /> Çalışma Saatleri
+                    </div>
+                    <p className="text-gray-400 text-sm ml-7">Her gün: 10:00 - 22:00</p>
+                  </div>
+
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                    <div className="flex items-center gap-3 text-white mb-2 font-semibold">
+                      <Phone size={18} className="text-luxera-gold" /> İletişim
+                    </div>
+                    <p className="text-gray-400 text-sm ml-7">+90 212 000 00 00</p>
+                  </div>
+                  
+                  <div className="pt-8">
+                    <p className="text-gray-400 leading-relaxed text-sm">
+                      {selectedStore.name}, Luxera Towers AVM'de lüksün ve zarafetin en yeni koleksiyonlarını ziyaretçileriyle buluşturuyor. Özel randevulu alışveriş deneyimi ve VIP kabin hizmetleriyle ayrıcalıklı hissedin.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-8 border-t border-white/10 shrink-0">
+                <button className="w-full bg-luxera-gold text-luxera-navy font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-white transition-colors flex items-center justify-center gap-2">
+                  Mağaza Sayfasına Git <ExternalLink size={16} />
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
