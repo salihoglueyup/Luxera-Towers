@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, ShieldCheck, PieChart, Activity, ExternalLink, Download } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import PageHero from '../../shared/ui/PageHero';
 import SectionHeader from '../../shared/ui/SectionHeader';
 import SEO from '../../shared/seo/SEO';
@@ -70,14 +71,12 @@ const Finance = () => {
                 Luxera Towers finansal süreçleri, Türkiye'nin lider rezidans yönetim yazılımı Apsiyon altyapısı ile güvence altındadır. İşlemlerinizi başlatmak için panele giriş yapın.
               </p>
             </div>
-            <a 
-              href="https://www.apsiyon.com/giris" 
-              target="_blank" 
-              rel="noopener noreferrer"
+            <Link 
+              to="/portal/login"
               className="inline-flex items-center gap-3 bg-luxera-gold text-luxera-navy px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:bg-white transition-all shadow-xl hover:scale-105 shrink-0"
             >
               Giriş Yap <ExternalLink size={18} />
-            </a>
+            </Link>
           </div>
         </div>
 

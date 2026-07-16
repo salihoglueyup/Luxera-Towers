@@ -234,16 +234,13 @@ const Navbar = () => {
                     
                     <div className="h-px bg-white/10 my-2"></div>
                     
-                    <a 
-                      href="https://www.apsiyon.com/giris" 
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link 
+                      to="/portal/login" 
                       className="group/link text-white hover:text-luxera-navy hover:bg-luxera-gold px-6 py-3 rounded-lg transition-all font-serif tracking-wide flex items-center gap-3"
                       onClick={() => setActiveDropdown(null)}
                     >
-                      <Lock size={16} className="text-luxera-gold group-hover/link:text-luxera-navy transition-colors" /> Apsiyon Giriş 
-                      <ExternalLink size={14} className="ml-auto opacity-50 group-hover/link:opacity-100" />
-                    </a>
+                      <Lock size={16} className="text-luxera-gold group-hover/link:text-luxera-navy transition-colors" /> Sisteme Giriş 
+                    </Link>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -297,9 +294,9 @@ const Navbar = () => {
                   <Link to="/portal/finans" className="text-xl text-gray-400 hover:text-luxera-gold transition-colors" onClick={() => setMobileMenu(false)}>- Finans & Aidat</Link>
                   <Link to="/portal/destek" className="text-xl text-gray-400 hover:text-luxera-gold transition-colors" onClick={() => setMobileMenu(false)}>- Konsiyerj & Destek</Link>
                   <Link to="/portal/tesisler" className="text-xl text-gray-400 hover:text-luxera-gold transition-colors" onClick={() => setMobileMenu(false)}>- Sosyal Yaşam & SPA</Link>
-                  <a href="https://www.apsiyon.com/giris" target="_blank" rel="noopener noreferrer" className="text-xl text-luxera-gold hover:text-white transition-colors flex items-center gap-2" onClick={() => setMobileMenu(false)}>
-                    - Apsiyon Giriş <ExternalLink size={16} />
-                  </a>
+                  <Link to="/portal/login" className="text-xl text-luxera-gold hover:text-white transition-colors flex items-center gap-2" onClick={() => setMobileMenu(false)}>
+                    - Sisteme Giriş
+                  </Link>
                 </div>
               </motion.div>
 

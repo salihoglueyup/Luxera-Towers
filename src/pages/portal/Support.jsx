@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Wrench, PhoneCall, Clock, CheckCircle, ExternalLink, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import PageHero from '../../shared/ui/PageHero';
 import SectionHeader from '../../shared/ui/SectionHeader';
 import SEO from '../../shared/seo/SEO';
@@ -70,14 +71,12 @@ const Support = () => {
           <p className="text-luxera-navy/80 mb-8 max-w-2xl">
             Tüm teknik destek, arıza bildirimi ve konsiyerj taleplerinizi Apsiyon üzerinden giriş yaparak teknik ekibimizin iş sırasına anında ekleyebilirsiniz.
           </p>
-          <a 
-            href="https://www.apsiyon.com/giris" 
-            target="_blank" 
-            rel="noopener noreferrer"
+          <Link 
+            to="/portal/login"
             className="inline-flex items-center gap-3 bg-luxera-navy text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-black transition-all shadow-xl hover:scale-105"
           >
             Sisteme Giriş <ExternalLink size={18} />
-          </a>
+          </Link>
         </div>
       </div>
     </div>

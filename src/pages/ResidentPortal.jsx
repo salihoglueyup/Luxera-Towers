@@ -75,16 +75,14 @@ const ResidentPortal = () => {
                 Aidat ödemelerinizi güvenle yapın, anlık bakiye durumunuzu kontrol edin, teknik servis taleplerinizi saniyeler içinde iletin ve lüks SPA/Havuz alanlarımız için anında rezervasyon oluşturun.
               </p>
               
-              <a 
-                href="https://www.apsiyon.com/giris" 
-                target="_blank" 
-                rel="noopener noreferrer"
+              <Link 
+                to="/portal/login"
                 className="inline-flex items-center justify-center gap-3 bg-luxera-gold text-luxera-navy px-10 py-5 rounded-full font-bold uppercase tracking-widest hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.5)] hover:scale-105"
               >
                 <Lock size={18} />
                 Sisteme Giriş Yap
                 <ExternalLink size={18} />
-              </a>
+              </Link>
             </div>
 
             {/* Quick Stats / Info Widget */}

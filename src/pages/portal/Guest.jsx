@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, Car, MapPin, Key, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import PageHero from '../../shared/ui/PageHero';
 import SectionHeader from '../../shared/ui/SectionHeader';
 import SEO from '../../shared/seo/SEO';
@@ -58,14 +59,12 @@ const Guest = () => {
           <p className="text-luxera-navy/80 mb-8 max-w-2xl">
             Ziyaretçi kabullerini ve vale taleplerinizi doğrudan Apsiyon portalı üzerinden yönetebilirsiniz.
           </p>
-          <a 
-            href="https://www.apsiyon.com/giris" 
-            target="_blank" 
-            rel="noopener noreferrer"
+          <Link 
+            to="/portal/login"
             className="inline-flex items-center gap-3 bg-luxera-navy text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-black transition-all shadow-xl hover:scale-105"
           >
-            Apsiyon'a Giriş Yap <ExternalLink size={18} />
-          </a>
+            Sisteme Giriş Yap <ExternalLink size={18} />
+          </Link>
         </div>
       </div>
     </div>
