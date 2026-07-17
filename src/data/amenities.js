@@ -3,12 +3,12 @@
 // Ayrıcalık alt sayfalarının ana görselleri — projenin kendi render'ları (Unsplash yerine).
 // Daha uygun özel render gelirse buradan değiştir.
 export const privilegeImages = {
-  concierge: '/images/amenities/d5_scene16_20240303_015548copy_2025-12-18_03-46-29_fa58f6.webp',
-  security: '/images/exterior/12_2025-12-18_02-46-35_4cee27.webp',
-  valet: '/images/exterior/7_2025-12-18_02-46-34_3b69d3.webp',
-  fitness: '/images/amenities/d5_scene21_20240303_011838copy_2025-12-18_03-46-29_26003e.webp',
-  housekeeping: '/images/interior/d5_scene10_20240304_220213copy_2025-12-18_03-47-03_de61ba.webp',
-  lounge: '/images/amenities/d5_scene9_20240303_024623copy_2025-12-18_03-46-29_a8b134.webp',
+  concierge: '/images/amenities/privilege_concierge_1784289286734.png',
+  security: '/images/amenities/privilege_security_macro_v4.png',
+  valet: '/images/amenities/privilege_valet_1784289315478.png',
+  fitness: '/images/amenities/privilege_fitness_1784289330910.png',
+  housekeeping: '/images/amenities/privilege_housekeeping_v2_1784289608856.png',
+  lounge: '/images/amenities/privilege_lounge_1784289347937.png',
 };
 
 // Ayrıcalık sayfalarındaki alt galeri şeridi için ortak görsel havuzu.

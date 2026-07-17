@@ -1,9 +1,11 @@
 // Katalog (lead) formu seçenek verileri — kolay düzenlenebilir.
-import { residences } from './residences';
 
 // Daire tipleri residences verisinden türetilir + ekstra seçenekler
 export const unitTypeOptions = [
-  ...residences.map((r) => r.id === '4+1' ? '4+1 Penthouse' : r.id),
+  '1+1',
+  '2+1',
+  '3+1',
+  '4+1 Penthouse',
   'Ticari Ünite',
   'Farketmez',
 ];

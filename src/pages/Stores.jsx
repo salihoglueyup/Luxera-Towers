@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, MapPin, X, ExternalLink, Clock, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { stores } from '../data/brands';
+import { getStores } from '../data/brands';
 import PageHero from '../shared/ui/PageHero';
 import SectionHeader from '../shared/ui/SectionHeader';
 import SEO from '../shared/seo/SEO';
@@ -10,16 +10,18 @@ import SEO from '../shared/seo/SEO';
 const Stores = () => {
   const { t } = useTranslation();
   
-  // Kat filtreleri
-  const floors = ['Tümü', ...new Set(stores.map(s => s.floor))];
-  const [activeFloor, setActiveFloor] = useState('Tümü');
+  const stores = getStores(t);
+  const ALL_KEY = t('stores.filters.all', 'Tümü');
+  const uniqueFloors = [...new Set(stores.map(s => s.floor))];
+  const floors = [{ label: ALL_KEY, value: null }, ...uniqueFloors.map(f => ({ label: f, value: f }))];
+  const [activeFloorValue, setActiveFloorValue] = useState(null);
   
   // Slide Over Panel iin secili magaza
   const [selectedStore, setSelectedStore] = useState(null);
 
-  const filteredStores = activeFloor === 'Tümü' 
+  const filteredStores = !activeFloorValue 
     ? stores 
-    : stores.filter(s => s.floor === activeFloor);
+    : stores.filter(s => s.floor === activeFloorValue);
 
   // Paneli kapatma ksayolu (Escape)
   useEffect(() => {
@@ -59,20 +61,17 @@ const Stores = () => {
                 <MapPin size={20} className="inline-block mr-2 text-luxera-gold" /> Kat Planı
               </h3>
               <div className="flex flex-col gap-3">
-                {floors.map(floor => (
+                {floors.map((floor, idx) => (
                   <button
-                    key={floor}
-                    onClick={() => setActiveFloor(floor)}
-                    className={`relative w-full text-left px-6 py-4 rounded-xl text-sm font-semibold tracking-wide transition-all duration-300 overflow-hidden group ${
-                      activeFloor === floor 
-                      ? 'text-luxera-navy bg-luxera-gold shadow-[0_0_20px_rgba(212,175,55,0.4)]' 
-                      : 'text-gray-400 bg-black/40 border border-white/5 hover:border-luxera-gold/50 hover:text-white'
+                    key={idx}
+                    onClick={() => setActiveFloorValue(floor.value)}
+                    className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                      activeFloorValue === floor.value
+                        ? 'bg-luxera-gold text-luxera-navy shadow-[0_0_15px_rgba(212,175,55,0.4)]'
+                        : 'text-gray-400 hover:text-white hover:bg-white/10'
                     }`}
                   >
-                    <span className="relative z-10">{floor}</span>
-                    {activeFloor !== floor && (
-                      <div className="absolute inset-0 bg-luxera-gold/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 z-0"></div>
-                    )}
+                    {floor.label}
                   </button>
                 ))}
               </div>

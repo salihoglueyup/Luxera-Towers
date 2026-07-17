@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import PageHero from '../shared/ui/PageHero';
 import StatStrip from '../shared/ui/StatStrip';
 import CtaBand from '../shared/ui/CtaBand';
-import { locationPois } from '../data/location';
+import { getLocationPois } from '../data/location';
 import { contactInfo } from '../data/site';
 import SEO from '../shared/seo/SEO';
 import ProjectMap from '../shared/ui/ProjectMap';
@@ -13,11 +13,13 @@ import ProjectMap from '../shared/ui/ProjectMap';
 // Veri dosyasındaki ikon adlarını lucide bileşenlerine eşle
 const ICONS = { Plane, Train, Bus, ShoppingBag, Store, GraduationCap, HeartPulse, Crosshair, MapPin };
 
-const categories = Object.keys(locationPois);
-
 const Location = () => {
   const { t } = useTranslation();
-  const [activeCat, setActiveCat] = useState(categories[0]);
+  
+  const locationPois = getLocationPois(t);
+  const categories = Object.keys(locationPois);
+  const [activeCatIndex, setActiveCatIndex] = useState(0);
+  const activeCat = categories[activeCatIndex];
 
   return (
     <div className="bg-luxera-navy min-h-screen text-white pb-24 overflow-hidden">
@@ -39,38 +41,40 @@ const Location = () => {
         {/* POI Listesi */}
         <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 1 }}>
           <div className="flex flex-wrap gap-3 mb-8">
-            {categories.map((cat) => (
+            {categories.map((cat, index) => (
               <button
-                key={cat}
-                onClick={() => setActiveCat(cat)}
+                key={index}
+                onClick={() => setActiveCatIndex(index)}
                 className={`px-5 py-2 rounded-full text-sm tracking-wide transition-all ${
-                  activeCat === cat
+                  activeCatIndex === index
                     ? 'bg-luxera-gold text-luxera-navy shadow-[0_0_15px_rgba(212,175,55,0.3)]'
                     : 'bg-transparent border border-white/20 text-gray-400 hover:border-luxera-gold hover:text-luxera-gold'
                 }`}
               >
-                {t(`pageLocation.categories.${cat}`, cat)}
+                {cat}
               </button>
             ))}
           </div>
 
           <div className="space-y-4">
-            {locationPois[activeCat].map((item, idx) => {
+            {locationPois[activeCat]?.map((item, idx) => {
               const Icon = ICONS[item.icon] || MapPin;
               return (
                 <motion.div
                   key={item.title}
                   initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: idx * 0.08 }}
-                  className="flex items-center gap-6 p-4 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-luxera-gold/20"
+                  className="flex items-center gap-6 p-4 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-luxera-gold/20 group"
                 >
                   <div className="w-14 h-14 rounded-full bg-luxera-charcoal border border-luxera-gold/30 flex items-center justify-center shrink-0">
                     <Icon className="text-luxera-gold" size={24} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-serif text-white">{t(`pageLocation.pois.${item.title}.title`, item.title)}</h3>
-                    <p className="text-gray-400 text-sm">{t(`pageLocation.pois.${item.title}.desc`, item.desc)}</p>
+                    <h4 className="font-serif text-lg text-white mb-1 group-hover:text-luxera-gold transition-colors">{item.title}</h4>
+                    <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
                   </div>
-                  <span className="text-xl font-serif text-luxera-gold">{t(`pageLocation.pois.${item.title}.time`, item.time)}</span>
+                  <div className="text-right flex-shrink-0">
+                    <span className="text-luxera-gold font-mono text-xl">{item.time}</span>
+                  </div>
                 </motion.div>
               );
             })}

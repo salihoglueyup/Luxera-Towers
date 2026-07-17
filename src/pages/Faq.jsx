@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { faqCategories } from '../data/faq';
+import { getFaqCategories } from '../data/faq';
 import { staggerContainer, fadeUp } from '../shared/utils/animations';
 
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,8 @@ const Faq = () => {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState(0);
   const [openIndex, setOpenIndex] = useState(null);
+
+  const faqCategories = getFaqCategories(t);
 
   return (
     <div className="bg-luxera-navy min-h-screen text-white pt-32 pb-24 overflow-hidden">
@@ -40,7 +42,7 @@ const Faq = () => {
               onClick={() => { setActiveCategory(idx); setOpenIndex(null); }}
               className={`px-6 py-3 rounded-full text-sm font-serif transition-all duration-300 ${activeCategory === idx ? 'bg-luxera-gold text-luxera-navy' : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'}`}
             >
-              {t(`faqData.${cat.id}.category`, cat.category)}
+              {cat.category}
             </button>
           ))}
         </motion.div>
@@ -60,25 +62,27 @@ const Faq = () => {
               className="bg-luxera-charcoal border border-luxera-gold/20 rounded-xl overflow-hidden"
             >
               <button 
+                className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none"
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full text-left px-8 py-6 flex items-center justify-between hover:bg-white/5 transition-colors"
               >
-                <span className="font-serif text-lg md:text-xl pr-8">{t(`faqData.${faqCategories[activeCategory].id}.faqs.${index}.q`, faq.question)}</span>
-                <span className="text-luxera-gold shrink-0">
-                  {openIndex === index ? <Minus size={24} /> : <Plus size={24} />}
-                </span>
+                <h3 className="font-serif text-lg pr-8">{faq.question}</h3>
+                <div className={`flex-shrink-0 transition-transform duration-300 ${openIndex === index ? 'rotate-180 text-luxera-gold' : 'text-gray-400'}`}>
+                  {openIndex === index ? <Minus size={20} /> : <Plus size={20} />}
+                </div>
               </button>
               
               <AnimatePresence>
                 {openIndex === index && (
                   <motion.div 
-                    initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-8 pb-6 text-gray-400 leading-relaxed border-t border-luxera-gold/10 pt-4">
-                      {t(`faqData.${faqCategories[activeCategory].id}.faqs.${index}.a`, faq.answer)}
-                    </div>
-                  </motion.div>
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="px-6 pb-5 text-gray-400 leading-relaxed border-t border-luxera-gold/10 pt-4 mt-2">
+                    {faq.answer}
+                  </div>
+                </motion.div>
                 )}
               </AnimatePresence>
             </motion.div>

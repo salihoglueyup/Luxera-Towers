@@ -11,6 +11,7 @@ const CustomCursor = () => {
   const reduceMotion = useReducedMotion();
   const [enabled, setEnabled] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [cursorText, setCursorText] = useState('');
 
   // Konum motion value olarak tutulur → mousemove'da React re-render tetiklenmez
   const x = useMotionValue(-100);
@@ -34,12 +35,25 @@ const CustomCursor = () => {
 
     const handleMouseOver = (e) => {
       const t = e.target;
+      
+      // Özel metin kontrolü
+      const textElement = t.closest?.('[data-cursor-text]');
+      if (textElement) {
+        setCursorText(textElement.getAttribute('data-cursor-text'));
+        setIsHovering(true);
+        return;
+      } else {
+        setCursorText('');
+      }
+
+      // Standart interaktif öğe kontrolü
       const interactive =
         t.tagName?.toLowerCase() === 'a' ||
         t.tagName?.toLowerCase() === 'button' ||
         t.closest?.('a') ||
         t.closest?.('button') ||
         t.closest?.('[role="button"]');
+        
       setIsHovering(Boolean(interactive));
     };
 
@@ -55,22 +69,50 @@ const CustomCursor = () => {
 
   return (
     <>
-      {/* Merkez nokta — konumu doğrudan motion value'dan alır (negatif margin ile merkezlenir) */}
+      {/* Merkez nokta — konumu doğrudan motion value'dan alır */}
       <motion.div
-        className="fixed top-0 left-0 -ml-2 -mt-2 w-4 h-4 bg-luxera-gold rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        style={{ x, y }}
-        animate={{ scale: isHovering ? 2 : 1 }}
-        transition={{ type: 'tween', ease: 'backOut', duration: 0.15 }}
-      />
+        className="fixed top-0 left-0 -ml-2 -mt-2 bg-luxera-gold rounded-full pointer-events-none z-[9999] flex items-center justify-center text-luxera-charcoal font-bold tracking-widest text-[8px] overflow-hidden"
+        style={{ 
+          x, 
+          y,
+          width: cursorText ? 80 : 16,
+          height: cursorText ? 80 : 16,
+          marginLeft: cursorText ? -40 : -8,
+          marginTop: cursorText ? -40 : -8,
+        }}
+        animate={{ 
+          scale: isHovering && !cursorText ? 2 : 1,
+        }}
+        transition={{ type: 'tween', ease: 'backOut', duration: 0.2 }}
+      >
+        <AnimatePresence>
+          {cursorText && (
+            <motion.span
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              className="text-center w-full whitespace-nowrap"
+            >
+              {cursorText}
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.div>
+      
       {/* Dış halka — yaylı (gecikmeli) takip */}
-      <motion.div
-        className="fixed top-0 left-0 -ml-5 -mt-5 w-10 h-10 border border-luxera-gold/50 rounded-full pointer-events-none z-[9998]"
-        style={{ x: ringX, y: ringY }}
-        animate={{ scale: isHovering ? 1.5 : 1, opacity: isHovering ? 0 : 1 }}
-        transition={{ type: 'tween', ease: 'easeOut', duration: 0.4 }}
-      />
+      {!cursorText && (
+        <motion.div
+          className="fixed top-0 left-0 -ml-5 -mt-5 w-10 h-10 border border-luxera-gold/50 rounded-full pointer-events-none z-[9998]"
+          style={{ x: ringX, y: ringY }}
+          animate={{ scale: isHovering ? 1.5 : 1, opacity: isHovering ? 0 : 1 }}
+          transition={{ type: 'tween', ease: 'easeOut', duration: 0.4 }}
+        />
+      )}
     </>
   );
 };
+
+// We need to import AnimatePresence for the text animation
+import { AnimatePresence } from 'framer-motion';
 
 export default CustomCursor;

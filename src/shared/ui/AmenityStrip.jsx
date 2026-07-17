@@ -2,13 +2,19 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { amenityGallery } from '../../data/amenities';
 
+import { useTranslation } from 'react-i18next';
+
 /**
  * Ayrıcalık alt sayfalarında kullanılan ortak galeri şeridi.
  * @param {string} [title]
  */
-const AmenityStrip = ({ title = 'Luxera Yaşamından Kareler' }) => (
-  <div className="mt-24 pt-16 border-t border-white/10">
-    <h2 className="text-3xl font-serif text-white mb-10 text-center">{title}</h2>
+const AmenityStrip = ({ title }) => {
+  const { t } = useTranslation();
+  const displayTitle = title || t('amenityStrip.title', 'Luxera Yaşamından Kareler');
+  
+  return (
+    <div className="mt-24 pt-16 border-t border-white/10">
+      <h2 className="text-3xl font-serif text-white mb-10 text-center">{displayTitle}</h2>
     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
       {amenityGallery.slice(0, 3).map((src, i) => (
         <motion.div
@@ -19,8 +25,9 @@ const AmenityStrip = ({ title = 'Luxera Yaşamından Kareler' }) => (
           <img src={src} alt="Luxera yaşam alanı" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
         </motion.div>
       ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default AmenityStrip;

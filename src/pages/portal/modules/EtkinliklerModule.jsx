@@ -1,12 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { getEvents } from '../../../data/events';
 
-import { events } from '../../../data/events';
+const EtkinliklerModule = () => {
+  const { t } = useTranslation();
+  const events = getEvents(t);
 
-const EtkinliklerModule = () => (
-  <motion.div key="etkinlikler" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    {events.map((evt, i) => (
+  return (
+    <motion.div key="etkinlikler" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {events.map((evt, i) => (
       <div key={evt.id} className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden group">
         <div className="h-48 overflow-hidden relative">
           <img src={evt.image} alt={evt.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -21,8 +25,9 @@ const EtkinliklerModule = () => (
           <button className="w-full bg-white/10 text-white font-bold py-3 rounded-xl hover:bg-luxera-gold hover:text-luxera-navy transition-colors mt-auto">Detayları Gör</button>
         </div>
       </div>
-    ))}
-  </motion.div>
-);
+      ))}
+    </motion.div>
+  );
+};
 
 export default EtkinliklerModule;

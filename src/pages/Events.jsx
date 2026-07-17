@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, X, CalendarPlus, ChevronRight, Tag } from 'lucide-react';
 import { staggerContainer, fadeUp } from '../shared/utils/animations';
-import { events } from '../data/events';
+import { getEvents } from '../data/events';
 import CtaBand from '../shared/ui/CtaBand';
 import PageHero from '../shared/ui/PageHero';
 import SectionHeader from '../shared/ui/SectionHeader';
@@ -13,8 +13,11 @@ import SEO from '../shared/seo/SEO';
 const Events = () => {
   const { t } = useTranslation();
   const [selected, setSelected] = useState(null);
-  const [activeFilter, setActiveFilter] = useState('Tümü');
+  const [activeFilter, setActiveFilter] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const events = getEvents(t);
+  const ALL_KEY = t('events.filters.all', 'Tümü');
 
   const ITEMS_PER_PAGE = 9;
 
@@ -27,10 +30,11 @@ const Events = () => {
   const sortedEvents = [...events].sort((a, b) => new Date(b.isoDate) - new Date(a.isoDate));
 
   // Get unique categories for filtering
-  const categories = ['Tümü', ...new Set(sortedEvents.map(e => e.category))];
+  const uniqueCategories = [...new Set(sortedEvents.map(e => e.category))];
+  const categories = [{ label: ALL_KEY, value: null }, ...uniqueCategories.map(c => ({ label: c, value: c }))];
 
   // Filter events based on active category
-  const filteredEvents = activeFilter === 'Tümü' 
+  const filteredEvents = !activeFilter 
     ? sortedEvents 
     : sortedEvents.filter(e => e.category === activeFilter);
 
@@ -68,16 +72,16 @@ const Events = () => {
               <button
                 key={idx}
                 onClick={() => {
-                  setActiveFilter(cat);
+                  setActiveFilter(cat.value);
                   setCurrentPage(1);
                 }}
                 className={`px-4 md:px-6 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-medium transition-all duration-300 ${
-                  activeFilter === cat 
+                  activeFilter === cat.value 
                   ? 'bg-luxera-gold text-luxera-navy shadow-[0_0_15px_rgba(212,175,55,0.4)]' 
                   : 'text-gray-400 hover:text-white hover:bg-white/10'
                 }`}
               >
-                {cat}
+                {cat.label}
               </button>
             ))}
           </div>

@@ -546,7 +546,11 @@
       "pl1": "1+1 Type A1",
       "pl2": "2+1 Type B1",
       "pl3": "3+1 Type C1",
-      "pl4": "4+1 Penthouse"
+      "pl4": "4+1 Penthouse",
+      "exterior_view": "Exterior View",
+      "interior_view": "Interior View",
+      "amenity_view": "Amenity Detail",
+      "plan_view": "Floor Plan"
     },
     "seo": {
       "title": "Gallery and Visuals"

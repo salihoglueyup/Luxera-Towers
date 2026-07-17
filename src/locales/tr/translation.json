@@ -546,7 +546,11 @@
       "pl1": "1+1 A1 Tipi",
       "pl2": "2+1 B1 Tipi",
       "pl3": "3+1 C1 Tipi",
-      "pl4": "4+1 Penthouse"
+      "pl4": "4+1 Penthouse",
+      "exterior_view": "Dış Mekan Görünümü",
+      "interior_view": "İç Mekan Görünümü",
+      "amenity_view": "Sosyal Alan Detayı",
+      "plan_view": "Kat Planı"
     },
     "seo": {
       "title": "Galeri ve Görseller"

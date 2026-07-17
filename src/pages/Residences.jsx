@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Download, PhoneCall, CalendarCheck, FileSignature, KeyRound, ZoomIn, X, ToggleLeft, ToggleRight, Layers } from 'lucide-react';
-import { residences } from '../data/residences';
+import { getResidences } from '../data/residences';
 import { downloadFile, CATALOG_URL } from '../shared/utils/download';
 import PageHero from '../shared/ui/PageHero';
 import SectionHeader from '../shared/ui/SectionHeader';
@@ -24,16 +24,18 @@ const Residences = () => {
     { icon: <KeyRound size={22} />, title: t('residences.buySteps.step4.title', 'Teslim'), desc: t('residences.buySteps.step4.desc', 'Anahtar teslim süreci ve sonrasında yaşamınıza başlayın.') },
   ];
 
-  const [activeTab, setActiveTab] = useState(residences[0]);
-  const [activeVariant, setActiveVariant] = useState(residences[0].plans[0]);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [activeVariantIndex, setActiveVariantIndex] = useState(0);
   const [showDimensions, setShowDimensions] = useState(true);
   const [lightboxImage, setLightboxImage] = useState(null);
 
+  const residences = getResidences(t);
+  const activeTab = residences[activeTabIndex] || residences[0];
+  const activeVariant = activeTab.plans[activeVariantIndex] || activeTab.plans[0];
+
   useEffect(() => {
-    if (activeTab && activeTab.plans && activeTab.plans.length > 0) {
-      setActiveVariant(activeTab.plans[0]);
-    }
-  }, [activeTab]);
+    setActiveVariantIndex(0);
+  }, [activeTabIndex]);
 
   const handlePlanDownload = () => {
     downloadFile(activeTab.planPdf || CATALOG_URL, `Luxera-${activeTab.id}-Plan.pdf`);
@@ -99,31 +101,33 @@ const Residences = () => {
         />
 
         {/* Ana Tipler (1+1, 2+1 vs) Tabs */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {residences.map((res) => (
-            <button
-              key={res.id}
-              onClick={() => setActiveTab(res)}
-              className={`px-8 py-3 rounded-full text-sm uppercase tracking-widest transition-all ${
-                activeTab.id === res.id
-                  ? 'bg-luxera-gold text-white shadow-[0_0_15px_rgba(212,175,55,0.4)]'
-                  : 'bg-transparent border border-white/20 text-gray-400 hover:border-luxera-gold hover:text-luxera-gold'
-              }`}
-            >
-              {res.id}
-            </button>
-          ))}
+        <div className="flex justify-center mb-10">
+          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 p-2 bg-white/5 border border-white/10 rounded-3xl md:rounded-full backdrop-blur-md">
+            {residences.map((res, index) => (
+              <button
+                key={res.id}
+                onClick={() => setActiveTabIndex(index)}
+                className={`px-6 py-2.5 rounded-full text-sm uppercase tracking-widest transition-all duration-300 font-medium ${
+                  activeTabIndex === index
+                    ? 'bg-luxera-gold text-luxera-navy shadow-[0_0_15px_rgba(212,175,55,0.4)]'
+                    : 'bg-transparent text-gray-400 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                {res.id}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Alt Tipler (A1, A3 vs) Tabs */}
         {activeTab.plans && activeTab.plans.length > 1 && (
           <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {activeTab.plans.map((variant) => (
+            {activeTab.plans.map((variant, vIndex) => (
               <button
                 key={variant.name}
-                onClick={() => setActiveVariant(variant)}
+                onClick={() => setActiveVariantIndex(vIndex)}
                 className={`px-5 py-2 rounded-md text-xs tracking-widest transition-all ${
-                  activeVariant?.name === variant.name
+                  activeVariantIndex === vIndex
                     ? 'bg-white/10 text-luxera-gold border border-luxera-gold/50'
                     : 'bg-transparent border border-white/10 text-gray-500 hover:border-white/30 hover:text-gray-300'
                 }`}
@@ -198,7 +202,7 @@ const Residences = () => {
                   {/* Ölçüleri Gizle/Göster Butonu (Sihirli Buton) */}
                   <div className="absolute top-4 right-4 z-30 flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 cursor-pointer hover:bg-black/60 transition-colors" onClick={() => setShowDimensions(!showDimensions)}>
                     <span className="text-xs uppercase tracking-widest text-gray-300">
-                      {showDimensions ? 'Ölçüleri Gizle' : 'Ölçüleri Göster'}
+                      {showDimensions ? t('residences.floorPlans.hideDimensions', 'Ölçüleri Gizle') : t('residences.floorPlans.showDimensions', 'Ölçüleri Göster')}
                     </span>
                     {showDimensions ? (
                       <ToggleRight size={24} className="text-luxera-gold" />

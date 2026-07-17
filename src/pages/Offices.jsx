@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Briefcase, MapPin, X, ExternalLink, Globe, Phone, Building } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { offices } from '../data/brands';
+import { getOffices } from '../data/brands';
 import PageHero from '../shared/ui/PageHero';
 import SectionHeader from '../shared/ui/SectionHeader';
 import SEO from '../shared/seo/SEO';
@@ -10,16 +10,18 @@ import SEO from '../shared/seo/SEO';
 const Offices = () => {
   const { t } = useTranslation();
   
-  // Sektor filtreleri (kat yerine sektor kullanabiliriz ofislerde veya hem kat hem sektor)
-  const sectors = ['Tümü', ...new Set(offices.map(o => o.sector))];
-  const [activeSector, setActiveSector] = useState('Tümü');
+  const offices = getOffices(t);
+  const ALL_KEY = t('offices.filters.all', 'Tümü');
+  const uniqueSectors = [...new Set(offices.map(o => o.sector))];
+  const sectors = [{ label: ALL_KEY, value: null }, ...uniqueSectors.map(s => ({ label: s, value: s }))];
+  const [activeSectorValue, setActiveSectorValue] = useState(null);
   
   // Slide Over Panel için secili ofis
   const [selectedOffice, setSelectedOffice] = useState(null);
 
-  const filteredOffices = activeSector === 'Tümü' 
+  const filteredOffices = !activeSectorValue 
     ? offices 
-    : offices.filter(o => o.sector === activeSector);
+    : offices.filter(o => o.sector === activeSectorValue);
 
   // Paneli kapatma kısayolu (Escape)
   useEffect(() => {
@@ -59,20 +61,17 @@ const Offices = () => {
                 <Building size={20} className="inline-block mr-2 text-luxera-gold" /> Sektörler
               </h3>
               <div className="flex flex-col gap-3">
-                {sectors.map(sector => (
+                {sectors.map((sector, idx) => (
                   <button
-                    key={sector}
-                    onClick={() => setActiveSector(sector)}
-                    className={`relative w-full text-left px-6 py-4 rounded-xl text-sm font-semibold tracking-wide transition-all duration-300 overflow-hidden group ${
-                      activeSector === sector 
-                      ? 'text-luxera-navy bg-luxera-gold shadow-[0_0_20px_rgba(212,175,55,0.4)]' 
-                      : 'text-gray-400 bg-black/40 border border-white/5 hover:border-luxera-gold/50 hover:text-white'
+                    key={idx}
+                    onClick={() => setActiveSectorValue(sector.value)}
+                    className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                      activeSectorValue === sector.value
+                        ? 'bg-luxera-gold text-luxera-navy shadow-[0_0_15px_rgba(212,175,55,0.4)]'
+                        : 'text-gray-400 hover:text-white hover:bg-white/10'
                     }`}
                   >
-                    <span className="relative z-10">{sector}</span>
-                    {activeSector !== sector && (
-                      <div className="absolute inset-0 bg-luxera-gold/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 z-0"></div>
-                    )}
+                    {sector.label}
                   </button>
                 ))}
               </div>

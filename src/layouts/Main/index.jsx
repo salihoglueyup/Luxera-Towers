@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import PageTransition from '../../shared/ui/PageTransition';
@@ -15,12 +16,14 @@ export default function MainLayout() {
     document.title = getPageTitle(location.pathname);
   }, [location.pathname]);
 
+  const { i18n } = useTranslation();
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <div className="flex-1">
         <AnimatePresence mode="wait">
-          <React.Fragment key={location.pathname}>
+          <React.Fragment key={`${location.pathname}-${i18n.language}`}>
             <PageTransition>
               <Outlet />
             </PageTransition>

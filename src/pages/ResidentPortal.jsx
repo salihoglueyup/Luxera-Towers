@@ -4,7 +4,7 @@ import { ShieldCheck, Lock, ExternalLink, Bell, CreditCard, Wrench, Users, Calen
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { staggerContainer, fadeUp } from '../shared/utils/animations';
-import { boardMembers } from '../data/brands';
+import { getBoardMembers } from '../data/brands';
 import PageHero from '../shared/ui/PageHero';
 import SectionHeader from '../shared/ui/SectionHeader';
 import SEO from '../shared/seo/SEO';
@@ -13,11 +13,13 @@ const ResidentPortal = () => {
   const { t } = useTranslation();
 
   const residentServices = [
-    { id: 1, title: 'Finans & Aidat Yönetimi', icon: <CreditCard size={24} />, img: '/images/interior/d5_scene5_20240304_220944copy_2025-12-18_03-47-03_7b5b78.webp', path: '/portal/finans' },
-    { id: 2, title: 'Konsiyerj & Teknik Destek', icon: <Wrench size={24} />, img: '/images/exterior/4_2025-12-18_02-46-35_361a6b.webp', path: '/portal/destek' },
-    { id: 3, title: 'Misafir & Vale Yönetimi', icon: <Users size={24} />, img: '/images/interior/d5_scene21_20240303_011838copy_2025-12-18_03-46-29_26003e.webp', path: '/portal/misafir' },
-    { id: 4, title: 'Sosyal Yaşam & SPA', icon: <Calendar size={24} />, img: '/images/amenities/d5_scene20_20240303_013151copy_2025-12-18_03-46-29_42c7ac.webp', path: '/portal/tesisler' }
+    { id: 1, title: t('portal.services.finance', 'Finans & Aidat Yönetimi'), icon: <CreditCard size={24} />, img: '/images/interior/d5_scene5_20240304_220944copy_2025-12-18_03-47-03_7b5b78.webp', path: '/portal/finans' },
+    { id: 2, title: t('portal.services.support', 'Konsiyerj & Teknik Destek'), icon: <Wrench size={24} />, img: '/images/exterior/4_2025-12-18_02-46-35_361a6b.webp', path: '/portal/destek' },
+    { id: 3, title: t('portal.services.guests', 'Misafir & Vale Yönetimi'), icon: <Users size={24} />, img: '/images/interior/d5_scene21_20240303_011838copy_2025-12-18_03-46-29_26003e.webp', path: '/portal/misafir' },
+    { id: 4, title: t('portal.services.social', 'Sosyal Yaşam & SPA'), icon: <Calendar size={24} />, img: '/images/amenities/d5_scene20_20240303_013151copy_2025-12-18_03-46-29_42c7ac.webp', path: '/portal/tesisler' }
   ];
+
+  const boardMembers = getBoardMembers(t);
 
   return (
     <div className="bg-luxera-navy min-h-screen text-white pb-24">
@@ -37,15 +39,15 @@ const ResidentPortal = () => {
       {/* Marquee (Kayan Yazi) - Duyurular */}
       <div className="w-full bg-luxera-gold text-luxera-navy py-3 overflow-hidden flex whitespace-nowrap border-y border-white/20 shadow-2xl relative z-20">
         <div className="animate-marquee flex items-center gap-12 font-semibold tracking-wide text-sm">
-          <span className="flex items-center gap-2"><Bell size={16} /> YENİ METRO İSTASYONU 1 DAKİKA MESAFEDE AÇILIYOR!</span>
+          <span className="flex items-center gap-2"><Bell size={16} /> {t('portal.marquee.m1', 'YENİ METRO İSTASYONU 1 DAKİKA MESAFEDE AÇILIYOR!')}</span>
           <span>•</span>
-          <span className="flex items-center gap-2"><Bell size={16} /> 05-08 ARALIK KAPALI HAVUZ PERİYODİK KIŞ BAKIMI.</span>
+          <span className="flex items-center gap-2"><Bell size={16} /> {t('portal.marquee.m2', '05-08 ARALIK KAPALI HAVUZ PERİYODİK KIŞ BAKIMI.')}</span>
           <span>•</span>
-          <span className="flex items-center gap-2"><Bell size={16} /> 25 ARALIK LOBİ LOUNGE'DA YENİ YIL CAZ DİNLETİSİ.</span>
+          <span className="flex items-center gap-2"><Bell size={16} /> {t('portal.marquee.m3', "25 ARALIK LOBİ LOUNGE'DA YENİ YIL CAZ DİNLETİSİ.")}</span>
           <span>•</span>
-          <span className="flex items-center gap-2"><Bell size={16} /> YENİ METRO İSTASYONU 1 DAKİKA MESAFEDE AÇILIYOR!</span>
+          <span className="flex items-center gap-2"><Bell size={16} /> {t('portal.marquee.m1', 'YENİ METRO İSTASYONU 1 DAKİKA MESAFEDE AÇILIYOR!')}</span>
           <span>•</span>
-          <span className="flex items-center gap-2"><Bell size={16} /> 05-08 ARALIK KAPALI HAVUZ PERİYODİK KIŞ BAKIMI.</span>
+          <span className="flex items-center gap-2"><Bell size={16} /> {t('portal.marquee.m2', '05-08 ARALIK KAPALI HAVUZ PERİYODİK KIŞ BAKIMI.')}</span>
         </div>
       </div>
 
@@ -65,14 +67,14 @@ const ResidentPortal = () => {
           <div className="relative z-10 p-10 md:p-20 flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-luxera-gold/20 border border-luxera-gold/30 text-luxera-gold text-xs uppercase tracking-widest font-bold mb-8 backdrop-blur-md">
-                <ShieldCheck size={16} /> Apsiyon Dijital Yönetim Sistemi
+                <ShieldCheck size={16} /> {t('portal.apsiyon.badge', 'Apsiyon Dijital Yönetim Sistemi')}
               </div>
               <h2 className="text-5xl md:text-6xl font-serif mb-6 text-white leading-tight">
-                Rezidans Yönetimi <br/>
-                <span className="text-luxera-gold font-sans font-light italic">Cebinizde.</span>
+                {t('portal.apsiyon.title1', 'Rezidans Yönetimi')} <br/>
+                <span className="text-luxera-gold font-sans font-light italic">{t('portal.apsiyon.title2', 'Cebinizde.')}</span>
               </h2>
               <p className="text-gray-300 mb-10 text-lg font-light leading-relaxed max-w-xl">
-                Aidat ödemelerinizi güvenle yapın, anlık bakiye durumunuzu kontrol edin, teknik servis taleplerinizi saniyeler içinde iletin ve lüks SPA/Havuz alanlarımız için anında rezervasyon oluşturun.
+                {t('portal.apsiyon.desc', 'Aidat ödemelerinizi güvenle yapın, anlık bakiye durumunuzu kontrol edin, teknik servis taleplerinizi saniyeler içinde iletin ve lüks SPA/Havuz alanlarımız için anında rezervasyon oluşturun.')}
               </p>
               
               <Link 
@@ -80,7 +82,7 @@ const ResidentPortal = () => {
                 className="inline-flex items-center justify-center gap-3 bg-luxera-gold text-luxera-navy px-10 py-5 rounded-full font-bold uppercase tracking-widest hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.5)] hover:scale-105"
               >
                 <Lock size={18} />
-                Sisteme Giriş Yap
+                {t('portal.apsiyon.login', 'Sisteme Giriş Yap')}
                 <ExternalLink size={18} />
               </Link>
             </div>
@@ -90,22 +92,22 @@ const ResidentPortal = () => {
               <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-6 rounded-2xl flex items-center gap-4 w-72 transform translate-x-8">
                 <div className="w-12 h-12 rounded-full bg-luxera-gold/20 flex items-center justify-center text-luxera-gold"><CreditCard /></div>
                 <div>
-                  <div className="text-white font-bold">Tek Tıkla Ödeme</div>
-                  <div className="text-gray-400 text-xs">3D Secure Güvencesiyle</div>
+                  <div className="text-white font-bold">{t('portal.stats.stat1.title', 'Tek Tıkla Ödeme')}</div>
+                  <div className="text-gray-400 text-xs">{t('portal.stats.stat1.desc', '3D Secure Güvencesiyle')}</div>
                 </div>
               </div>
               <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-6 rounded-2xl flex items-center gap-4 w-72">
                 <div className="w-12 h-12 rounded-full bg-luxera-gold/20 flex items-center justify-center text-luxera-gold"><Wrench /></div>
                 <div>
-                  <div className="text-white font-bold">7/24 Teknik Servis</div>
-                  <div className="text-gray-400 text-xs">Anında Müdahale Ekibi</div>
+                  <div className="text-white font-bold">{t('portal.stats.stat2.title', '7/24 Teknik Servis')}</div>
+                  <div className="text-gray-400 text-xs">{t('portal.stats.stat2.desc', 'Anında Müdahale Ekibi')}</div>
                 </div>
               </div>
               <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-6 rounded-2xl flex items-center gap-4 w-72 transform -translate-x-8">
                 <div className="w-12 h-12 rounded-full bg-luxera-gold/20 flex items-center justify-center text-luxera-gold"><Calendar /></div>
                 <div>
-                  <div className="text-white font-bold">Tesis Rezervasyonu</div>
-                  <div className="text-gray-400 text-xs">SPA & Kapalı Havuz</div>
+                  <div className="text-white font-bold">{t('portal.stats.stat3.title', 'Tesis Rezervasyonu')}</div>
+                  <div className="text-gray-400 text-xs">{t('portal.stats.stat3.desc', 'SPA & Kapalı Havuz')}</div>
                 </div>
               </div>
             </div>
@@ -193,7 +195,7 @@ const ResidentPortal = () => {
                   </div>
                   <h3 className="text-lg font-bold text-luxera-navy mb-2">{member.name}</h3>
                   <p className="text-luxera-navy/80 text-sm mb-6 line-clamp-3">
-                    Luxera Towers projelerinin vizyoner süreçlerini yöneten deneyimli profesyonel.
+                    {t('portal.board.desc', 'Luxera Towers projelerinin vizyoner süreçlerini yöneten deneyimli profesyonel.')}
                   </p>
                   <div className="flex justify-center gap-4 text-luxera-navy">
                     <a href="mailto:yonetim@luxeratowers.com" className="hover:scale-110 transition-transform bg-white/30 p-2 rounded-full"><Mail size={16} /></a>

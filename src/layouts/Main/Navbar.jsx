@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Download, Lock, ExternalLink, CreditCard, Wrench, Calendar, LayoutDashboard } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { residences } from '../../data/residences';
+import { getResidences } from '../../data/residences';
 import CatalogModal from '../../features/lead/CatalogModal';
 import LanguageSwitcher from '../../shared/ui/LanguageSwitcher';
 
@@ -15,6 +15,8 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [showLeadModal, setShowLeadModal] = useState(false);
   const location = useLocation();
+
+  const residences = getResidences(t);
 
   // Her sayfa değişiminde en üste scroll yap
   useEffect(() => {
