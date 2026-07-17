@@ -10,7 +10,7 @@ const CtaBand = ({
   desc = 'Uzman satış danışmanlarımızla görüşerek size en uygun seçenekleri keşfedin ve projeyi yakından tanıyın.',
   primary = { label: 'İletişime Geçin', href: '/iletisim' },
   secondary,
-  backgroundImage = '/images/exterior/8_2025-12-18_02-46-35_36bf45.webp',
+  backgroundImage = '/images/exterior/8_2025-12-18_02-46-35_fb63d5.webp',
   className = '',
 }) => {
   return (
