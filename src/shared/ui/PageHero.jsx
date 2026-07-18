@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const PageHero = ({ overline, title, highlight, subtitle, children, center = true, backgroundImage }) => {
+  const { t } = useTranslation();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -44,7 +46,7 @@ const PageHero = ({ overline, title, highlight, subtitle, children, center = tru
           style={{ opacity }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-luxera-gold text-xs uppercase tracking-widest font-semibold">Keşfet</span>
+          <span className="text-luxera-gold text-xs uppercase tracking-widest font-semibold">{t('common.discover', 'Keşfet')}</span>
           <div className="w-[1px] h-12 bg-white/20 relative overflow-hidden">
             <motion.div 
               animate={{ y: [0, 48, 0] }} 

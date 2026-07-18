@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Download, Newspaper } from 'lucide-react';
 import { staggerContainer, zoomIn } from '../shared/utils/animations';
-import { pressItems } from '../data/press';
+import { getPressItems } from '../data/press';
 import { downloadCatalog } from '../shared/utils/download';
 import PageHero from '../shared/ui/PageHero';
 import SectionHeader from '../shared/ui/SectionHeader';
@@ -11,10 +11,10 @@ import CtaBand from '../shared/ui/CtaBand';
 
 import { useTranslation } from 'react-i18next';
 
-const uniqueSources = [...new Set(pressItems.map((p) => p.source))].length;
-
 const Media = () => {
   const { t } = useTranslation();
+  const pressItems = getPressItems(t);
+  const uniqueSources = [...new Set(pressItems.map((p) => p.source))].length;
   
   const pressStats = [
     { value: pressItems.length, suffix: '+', label: t('media.stats.s1', 'Basın Haberi') },

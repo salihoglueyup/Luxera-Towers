@@ -2290,5 +2290,43 @@
   },
   "luxuryCard": {
     "action": "View in Detail"
+  },
+  "press": {
+    "p1": {
+      "source": "Forbes Türkiye",
+      "date": "October 2025",
+      "title": "The New Icon of Basın Ekspres is Rising",
+      "desc": "Luxera Towers draws attention with its innovative design that changes the architectural silhouette of the region."
+    },
+    "p2": {
+      "source": "Economist",
+      "date": "September 2025",
+      "title": "New Favorite of Investors",
+      "desc": "Luxera Towers stands out with its short amortization period and high return potential."
+    },
+    "p3": {
+      "source": "Hurriyet Real Estate",
+      "date": "August 2025",
+      "title": "Luxury and Comfort Together",
+      "desc": "It is a complete living center with its extensive social facilities and prestigious commercial areas."
+    },
+    "p4": {
+      "source": "Nationality",
+      "date": "July 2025",
+      "title": "A Project at the Heart of Transportation",
+      "desc": "Only 200 meters from Güneşli Metro Station makes the project unrivaled in terms of transportation."
+    },
+    "p5": {
+      "source": "BloombergHT",
+      "date": "June 2025",
+      "title": "The New Standard in Mixed Living Projects",
+      "desc": "Bringing together the residence and shopping mall concept, Luxera Towers leads the sector."
+    },
+    "p6": {
+      "source": "Real Estate Lobby",
+      "date": "May 2025",
+      "title": "Basın Ekspres is on the Rise",
+      "desc": "Luxera Towers takes the lead among the projects that are the locomotive of transformation in the region."
+    }
   }
 }
