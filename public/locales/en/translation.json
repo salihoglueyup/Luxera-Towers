@@ -67,9 +67,9 @@
         "desc": "[EN] Dünyaca ünlü steakhouse deneyimi ve eşsiz et lezzetleri."
       },
       "d2": {
-        "category": "[EN] Kafe",
-        "floor": "[EN] Zemin Kat",
-        "desc": "[EN] Premium kahve çekirdekleri, özel demleme yöntemleri ve şık atmosfer."
+        "category": "Market",
+        "floor": "Ground floor",
+        "desc": "Fresh produce, wide grocery aisles and everyday convenience for all your daily needs."
       },
       "d3": {
         "category": "[EN] Restoran",

@@ -67,9 +67,9 @@
         "desc": "[AR] Dünyaca ünlü steakhouse deneyimi ve eşsiz et lezzetleri."
       },
       "d2": {
-        "category": "[AR] Kafe",
-        "floor": "[AR] Zemin Kat",
-        "desc": "[AR] Premium kahve çekirdekleri, özel demleme yöntemleri ve şık atmosfer."
+        "category": "سوبر ماركت",
+        "floor": "الطابق الأرضي",
+        "desc": "منتجات طازجة وأقسام تسوق واسعة وراحة يومية لتلبية كل احتياجاتكم."
       },
       "d3": {
         "category": "[AR] Restoran",

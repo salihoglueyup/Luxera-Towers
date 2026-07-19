@@ -67,9 +67,9 @@
         "desc": "[RU] Dünyaca ünlü steakhouse deneyimi ve eşsiz et lezzetleri."
       },
       "d2": {
-        "category": "[RU] Kafe",
-        "floor": "[RU] Zemin Kat",
-        "desc": "[RU] Premium kahve çekirdekleri, özel demleme yöntemleri ve şık atmosfer."
+        "category": "Магазин",
+        "floor": "Первый этаж",
+        "desc": "Свежие продукты, широкие торговые ряды и повседневное удобство для всех ваших нужд."
       },
       "d3": {
         "category": "[RU] Restoran",
